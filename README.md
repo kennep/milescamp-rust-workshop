@@ -23,7 +23,7 @@ $ cargo --version
 cargo 1.54.0 (5ae8d74b3 2021-06-22)
 ```
 
-Now that you've got Rust and Cargo installed, you need an IDE. I'm using
+Now that you've got Rust and Cargo installed, you need a code editor or an IDE. I'm using
 [Visual Studio Code](https://code.visualstudio.com/) with the 
 [Rust](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
 plugin, but both 
@@ -33,7 +33,7 @@ There's even an [IntelliJ plugin](https://intellij-rust.github.io/)!
 
 ## Taking Rust for a spin
 
-To get to know your chosen IDE and the Rust language a little before the
+To get to know your chosen editor/IDE and the Rust language a little before the
 workshop, I recommend you read through
 [Chapter 1](https://doc.rust-lang.org/stable/book/ch01-00-getting-started.html)
 of the [Rust Programming Language](https://doc.rust-lang.org/stable/book/) book,
