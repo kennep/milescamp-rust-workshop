@@ -21,23 +21,223 @@
     />
 
     <link rel="stylesheet" href="css/ribbon.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
-    <div class="corner-ribbon right">COMING SOON!</div>
     <div class="reveal">
       <div class="slides">
-        <section
-          data-markdown
-          data-separator="-----"
-          data-separator-vertical="---"
-        >
-          <textarea data-template>
-            # Rust Workshop
-
-            ### Miles Camp 2021
-          </textarea>
+        <section data-state="whitebg">
+          <img src="img/ferris_white.gif">
+          <small>Pre-workshop instructions:<br>
+          <a href="https://kennep.github.io/milescamp-rust-workshop/README.html" target="_blank">https://kennep.github.io/milescamp-rust-workshop/README.html</a></small>
         </section>
-      </div>
+        <section>
+          <h1>Rust Workshop</h1>
+          <h2>Miles Camp 2021</h2>
+        </section>
+        <section>
+          <h2>Disclaimer</h2>
+          <p>I am a Rust Noob</p>
+        </section>
+        <section>
+          <h2>What is rust?</h2>
+          <blockquote cite="https://research.mozilla.org/rust/">
+            Rust is an open-source systems programming language that focuses on speed, memory safety and parallelism
+            <cite><a href="https://research.mozilla.org/rust/">https://research.mozilla.org/rust/</a></cite>
+          </blockquote>
+        </section>
+        <section>
+          <h2>Hello, Miles!</h2>
+          <pre><code class="language-rust" data-code="code/hello-miles/src/main.rs"></code></pre>
+          <pre class="fragment"><code class="language-shell">
+$ cargo run
+Compiling hello-miles v0.1.0 (hello-miles)
+Finished dev [unoptimized + debuginfo] target(s) in 1.23s
+Running `target\debug\hello-miles.exe`
+Hello, Miles Camp 2021!
+          </code></pre>
+          <aside class="notes" data-markdown>
+            ### Features demonstrated:
+            * fn syntax and the main function
+            * type inference of the variable
+            * macros (!) - compilation failure if we mess up number of arguments
+          </aside>
+        </section>
+        <section>
+          <h2>Memory management approaches</h2>
+          <ul>
+            <li class="fragment">Manual memory management (C, C++)</li>
+            <li class="fragment">Garbage collection (Java, C#, Go)</li>
+            <li class="fragment">Resource counting (Python)</li>
+            <li class="fragment">Compiler-managed memory (Rust!)</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            ### Manual
+            * You must insert calls to free memory after use
+            * Fast
+            * Requires a lot of effort from the programmer
+            * Prone to memory safety bugs
+            
+            ### Garbage collection
+            * Easy to use (don't have to think about freeing memory)
+            * Prevents a lot of memory safety bugs
+            * Slower than manual handling
+            * Unpredictable performance hit
+            
+            ### Reference counting
+            * Easy to use (don't have to think about freeing memory)
+            * Prevents a lot of memory safety bugs
+            * Slower than manual handling
+            * Reference loops possible
+
+            ### Compiler-managed memory
+            * The compiler inserts calls to free memory automatically
+            * As fast as manual memory management
+            * As safe as automated memory management
+            * A free lunch? No, we get a really pedantic compiler
+          </li>
+          </aside>
+        </section>
+        <section>
+          <h2>Borrowing and the borrow checker</h2>
+          <p>One of the most confusing things for new Rust developers!</p>
+          <p>This is the Rust language feature that lets the compiler know when to free memory</p>
+        </section>
+        <section>
+          <h2>Passing a variable</h2>
+          <p>Passing a variable to another function passes <em>ownership</em> of that variable to the function</em>
+            <aside class="notes">You cannot access it afterwards!</aside>
+          </p>
+          <div class="r-stack">
+            <pre><code class="language-rust" data-code="code/borrow-pass-ownership/src/main.rs"></code></pre>
+            <pre class="fragment"><code class="language-rust" data-code="code/borrow-pass-ownership/src/incorrect.rs"></code></pre>
+            <p class="fragment"><img src="img/borrow-error.png"></p>
+          </div>
+        </section>
+        <section>
+          <h2>Copy and Clone traits</h2>
+          <ul>
+            <li>The <strong>Copy</strong> trait is implemented automatically by the compiler for primitive values
+            and structures containing only primitives</li>
+            <li>Strings do <em>not</em> implement <strong>Copy</strong>.</li>
+            <li>Instead, strings and many other types implement the <strong>Clone</strong> trait</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Types that implement Copy</h2>
+          <pre><code class="language-rust" data-code="code/borrow-copy/src/main.rs"></code></pre>
+          <pre class="fragment"><code class="language-shell">
+Hello, HAL 9000!
+I said hello to HAL 9000!    
+          </code></pre>
+        </section>
+        <section>
+          <h2>Using the Clone trait</h2>
+          <pre><code class="language-rust" data-code="code/borrow-clone/src/main.rs"></code></pre>
+          <pre class="fragment"><code class="language-shell">
+Hello, Ferris!
+I said hello to Ferris!            
+          </code></pre>
+        </section>
+        <section>
+          <h2>Passing a variable by reference</h2>
+          <p>This lets a function "borrow" the value for a while
+          </p>
+          <pre><code class="language-rust" data-code="code/borrow-ref/src/main.rs"></code></pre>
+        </section>
+        <section>
+          <h2>Variables and mutability</h2>
+          <ul>
+            <li>Variables are <em>immutable</em> by default</li>
+            <li>You can declare them as mutable by using <code>let mut</code></li>
+          </ul>
+          <pre><code class="language-rust" data-code="code/let-mut/src/main.rs"></code></pre>
+          <pre class="fragment"><code class="language-shell">
+Hello, Ferris the crab!
+          </code></pre>
+        </section>
+        <section>
+          <h2>Enums, Option and Result</h2>
+          <p>
+            Rust enums are what is called discriminated unions or algebraic datatypes in other languages
+          </p>
+          <pre><code class="language-rust">
+enum Option&lt;T&gt; {
+  Some(T),
+  None,
+}
+
+enum Result&lt;T, E&gt; {
+  Ok(T),
+  Err(E),
+}
+          </code></pre>
+        </section>
+        <section>
+          <h2>Match expressions</h2>
+          <pre><code class="language-rust" data-code="code/match-expr/src/main.rs" style="font-size: small; line-height: 1.1;"></code></pre>
+        </section>
+        <section>
+          <h2>A whirlwind tour of the Rust ecosystem</h2>
+        </section>
+        <section>
+          <h2>Core sites and docs</h2>
+          <ul>
+            <li><a href="https://www.rust-lang.org/" target="_blank">Rust language site</a></li>
+            <li><a href="https://doc.rust-lang.org/stable/book/" target="_blank">The Rust Programming Language book</a></li>
+            <li><a href="https://crates.io/" target="_blank">Crates.io - Rust packages</a></li>
+            <li><a href="https://rust-cli.github.io/book/index.html" target="_blank">Command line apps in Rust</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Rocket</h2>
+          <p><a href="https://rocket.rs/">https://rocket.rs/</a></p>
+        </section>
+        <section>
+          <h2>WebAssembly</h2>
+          <p>Code your frontend in Rust and compile it to WebAssembly</p>
+          <p><a href="https://rustwasm.github.io/docs/book/">The Rust WebAssembly book</a></p>
+          <p><a href="https://yew.rs/">The Yew framework</a></p>
+          <p><a href="https://github.com/seed-rs/seed">The Seed framework</a></p>
+          <p><a href="https://github.com/flosse/rust-web-framework-comparison">Rust Web Framework comparison</a></p>
+        </section>
+        <section>
+          <h2>Rust full-stack</h2>
+          <p><a href="https://github.com/MoonZoon/MoonZoon">MoonZoon</a></p>
+        </section>
+        <section>
+          <h2>Command-line apps: Some examples</h2>
+          <p><a href="https://github.com/kennep/milescamp-rust-workshop" target="_blank">The code in this presentation</a></p>
+          <p><a href="https://github.com/kennep/b64url" target="_blank">An URL-safe Base64 decoder/encoder</a></p>
+          <p><a href="https://github.com/kennep/jwtdecode" target="_blank">JWT decoder</a></p>
+        </section>
+        <section>
+          <h2>Misc</h2>
+          <p><a href="https://diesel.rs/" target="_blank">Diesel ORM</a></p>
+          <p><a href="https://docs.rs/reqwest/0.11.4/reqwest/" target="_blank">Reqwest HTTP client</a></p>
+          <p><a href="https://www.redox-os.org/">Redox, the Rust Operating System</a></p>
+        </section>
+        <section data-auto-animate>
+          <h2>Hackaton</h2>
+          <p>Spend 10 minutes thinking about what you want to make</p>
+          <p>Feel free to discuss with your neighbour!</p>
+        </section>
+        <section data-auto-animate>
+          <h2>Hackaton</h2>
+          <p>Tell us your idea!</p>
+        </section>
+        <section data-auto-animate data-transition="zoom-out">
+          <h2>Hackaton</h2>
+          <p>Find your group!</p>
+        </section>
+        <section data-transition="zoom">
+          <h1>Good luck!</h1>
+        </section>
+        <section>
+          <h2>Credits</h2>
+          <p>First slide animated crab:</p>
+          <a href="https://www.behance.net/gallery/42774743/Rustacean">https://www.behance.net/gallery/42774743/Rustacean</a>
+        </section>
     </div>
 
     <script src="reveal.js/dist/reveal.js"></script>
@@ -45,6 +245,7 @@
     <script src="reveal.js/plugin/markdown/markdown.js"></script>
     <script src="reveal.js/plugin/highlight/highlight.js"></script>
     <script src="reveal.js/plugin/zoom/zoom.js"></script>
+    <script src="plugins/externalcode.js"></script>
     <script>
       // More info about initialization & config:
       // - https://revealjs.com/initialization/
@@ -53,7 +254,7 @@
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+        plugins: [Externalcode, RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
       });
     </script>
   </body>

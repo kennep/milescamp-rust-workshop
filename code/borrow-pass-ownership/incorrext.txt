@@ -1,0 +1,18 @@
+   Compiling borrow-pass-ownership v0.1.0 (C:\Users\kenneth\Projects\Miles\milescamp-rust-workshop\code\borrow-pass-ownership)
+error[E0382]: borrow of moved value: `name`
+ --> src\main.rs:5:36
+  |
+2 |     let name = String::from("Ferris!");
+  |         ---- move occurs because `name` has type `String`, which does not implement the `Copy` trait
+3 |     say_hello(name);
+  |               ---- value moved here
+4 |     // The 'name' variable is not accessible after it has been moved into say_hello
+5 |     println!("I said hello to {}", name);
+  |                                    ^^^^ value borrowed here after move
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `borrow-pass-ownership`
+
+To learn more, run the command again with --verbose.

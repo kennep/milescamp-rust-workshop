@@ -1,0 +1,14 @@
+cite {
+    font-size: medium;
+    font-style: italic;
+    float: right;
+    margin-top: 1em;
+}
+
+.darkbg {
+    background-color: rgb(35, 35, 35);
+}
+
+.whitebg {
+    background-color: white;    
+}
